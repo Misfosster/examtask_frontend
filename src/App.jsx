@@ -3,6 +3,8 @@ import facade from "./apiFacade";
 import LogIn from "./components/LoginForm";
 import LoggedIn from "./components/LoggedIn";
 import {NavLink, Route, Routes} from "react-router-dom";
+import CreatePage from "./components/CreatePage.jsx";
+import ShowPage from "./components/ShowPage.jsx";
 
 
 function App() {
@@ -19,6 +21,10 @@ function App() {
         window.location.replace('/examtask/');
 
     };
+
+    function isAdmin() {
+        return user.roles.includes("admin");
+    }
 
     const login = (user, pass) => {
         facade.login(user, pass).then(() => {
@@ -47,6 +53,11 @@ function App() {
                             <li>
                                 <NavLink to="/profilepage">Profile</NavLink>
                             </li>
+
+                            {isAdmin() && (
+                            <li>
+                                <NavLink to="/createpage">Create</NavLink>
+                            </li>)}
                             <li>
                                 <NavLink to="/logout" onClick={handleLogout}>
                                     Logout
@@ -71,8 +82,8 @@ function App() {
                             <LogIn login={login}/>
                         ) : (
                             <div>
-                                <h3>Here is your homepage</h3>
-                                
+                                <h3>Welcome back {user.username}</h3>
+                                <ShowPage/>
                             </div>
                         )}
                     </div>
@@ -101,6 +112,8 @@ function App() {
                 
                 <Route path="/profilepage"
                        element={<LoggedIn user={user} logout={logout} loggedIn={loggedIn}/>}></Route>
+                <Route path="/createpage" element={<CreatePage/>}></Route>
+
             </Routes>
         </div>
     )

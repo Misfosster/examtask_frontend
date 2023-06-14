@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import facade from "../apiFacade.js";
-import ProfilePage from "./ProfilePage.jsx";
 
 function LoggedIn({user}) {
     const [dataFromServer, setDataFromServer] = useState("Loading...");
@@ -21,9 +20,6 @@ function LoggedIn({user}) {
             <h5>
                 {user.username} with roles: {user.roles}
             </h5>
-            <div>
-                <ProfilePage user={user}/>
-            </div>
         </div>
     );
 }
